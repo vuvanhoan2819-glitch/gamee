@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOANHOAN | 3D Luxury K-Beauty Flagship Store</title>
+    
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-dark: #05020a;
+            --panel-bg: rgba(18, 10, 32, 0.65);
+            --panel-border: rgba(255, 64, 129, 0.3);
+            --primary-glow: #ff2a75;
+            --secondary-glow: #00f0ff;
+            --accent-purple: #9d4edd;
+            --gold-accent: #ffd700;
+            --text-main: #f8f9fc;
+            --text-muted: #9aa0b6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans KR', 'Montserrat', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(255, 42, 117, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 240, 255, 0.2) 0%, transparent 45%),
+                radial-gradient(circle at 50% 30%, rgba(157, 78, 221, 0.15) 0%, transparent 50%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Animated Glowing Orbs Background */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatOrb 12s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 350px; height: 350px; background: var(--primary-glow); top: 10%; left: -50px; }
+        .orb-2 { width: 450px; height: 450px; background: var(--accent-purple); bottom: 10%; right: -100px; animation-delay: -5s; }
+
+        @keyframes floatOrb {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-50px) scale(1.1); }
+        }
+
+        /* Top Announcement Bar */
+        .top-announcement {
+            background: linear-gradient(90deg, #ff2a75, #9d4edd, #00f0ff);
+            background-size: 200% 200%;
+            animation: gradientShift 6s ease infinite;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-align: center;
+            padding: 0.45rem 1rem;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            position: relative;
+            z-index: 100;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-columns: 260px 1fr 340px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Sidebar Left */
+        .sidebar-left {
+            background: var(--panel-bg);
+            backdrop-filter: blur(30px);
+            border-right: 1px solid var(--panel-border);
+            padding: 2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-glow), var(--accent-purple));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: white;
+            box-shadow: 0 0 25px rgba(255, 42, 117, 0.7);
+        }
+
+        .brand-text h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #fff, var(--primary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-text span {
+            font-size: 0.65rem;
+            color: var(--secondary-glow);
+            letter-spacing: 2px;
+            display: block;
+            font-weight: 800;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1.1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active a, .nav-item a:hover {
+            color: white;
+            background: linear-gradient(90deg, rgba(255, 42, 117, 0.3), transparent);
+            border-left: 4px solid var(--primary-glow);
+            box-shadow: 0 0 20px rgba(255, 42, 117, 0.3);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        /* Search Header */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1.5rem;
+        }
+
+        .search-box {
+            position: relative;
+            flex-grow: 1;
+            max-width: 550px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 3.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--panel-border);
+            border-radius: 30px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 25px rgba(255, 42, 117, 0.4);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--panel-border);
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary-glow);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .badge-count {
+            position: absolute;
+            top: -2px; right: -2px;
+            background: var(--secondary-glow);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 900;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 3D Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(12, 5, 24, 0.95), rgba(50, 15, 75, 0.75)), 
+                        url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1400&q=80') center/cover;
+            border-radius: 28px;
+            padding: 3.5rem 3rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--panel-border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            margin-bottom: 2.5rem;
+            transform-style: preserve-3d;
+        }
+
+        .hero-body {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(255, 42, 117, 0.25);
+            border: 1px solid var(--primary-glow);
+            color: var(--primary-glow);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(to right, #fff, #ffb3c1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-glow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.95rem 2.2rem;
+            background: linear-gradient(135deg, var(--primary-glow), var(--accent-purple));
+            color: white;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            box-shadow: 0 0 25px rgba(255, 42, 117, 0.6);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-glow:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 35px rgba(255, 42, 117, 0.9);
+        }
+
+        /* 3D Product Grid System */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.8rem;
+            perspective: 1000px;
+        }
+
+        .product-card-3d {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 22px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            transition: transform 0.2s ease-out, box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .product-card-3d:hover {
+            border-color: var(--primary-glow);
+            box-shadow: 0 20px 40px rgba(255, 42, 117, 0.35);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 14px; left: 14px;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            z-index: 5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .badge-best { background: var(--primary-glow); color: white; }
+        .badge-new { background: var(--secondary-glow); color: black; }
+        .badge-sale { background: #ff9e00; color: black; }
+
+        .product-img-wrapper {
+            position: relative;
+            height: 230px;
+            overflow: hidden;
+            background: #0d0618;
+            transform: translateZ(20px);
+        }
+
+        .product-img-wrapper img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .product-card-3d:hover .product-img-wrapper img {
+            transform: scale(1.12);
+        }
+
+        .view-3d-tag {
+            position: absolute;
+            top: 14px; right: 14px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.25rem 0.6rem;
+            border-radius: 8px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            z-index: 5;
+        }
+
+        .product-details {
+            padding: 1.3rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            transform: translateZ(30px);
+        }
+
+        .brand-name {
+            font-size: 0.75rem;
+            color: var(--secondary-glow);
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .product-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin: 0.4rem 0;
+            color: white;
+            line-height: 1.35;
+            height: 2.6rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 0.8rem;
+        }
+
+        .price-final {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--primary-glow);
+        }
+
+        .btn-add-cart {
+            background: rgba(255, 42, 117, 0.15);
+            border: 1px solid var(--primary-glow);
+            color: var(--primary-glow);
+            width: 40px; height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-add-cart:hover {
+            background: var(--primary-glow);
+            color: white;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        /* Sidebar Right Widgets */
+        .sidebar-right {
+            background: var(--panel-bg);
+            backdrop-filter: blur(30px);
+            border-left: 1px solid var(--panel-border);
+            padding: 2rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        /* Cart Drawer */
+        .cart-drawer {
+            position: fixed;
+            top: 0; right: -420px;
+            width: 400px; height: 100vh;
+            background: rgba(8, 4, 16, 0.97);
+            backdrop-filter: blur(35px);
+            border-left: 1px solid var(--primary-glow);
+            z-index: 2500;
+            transition: right 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -20px 0 50px rgba(0, 0, 0, 0.9);
+        }
+
+        .cart-drawer.open { right: 0; }
+
+        /* 3D Detailed Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(15px);
+            z-index: 3500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-content-3d {
+            background: var(--bg-dark);
+            border: 1px solid var(--primary-glow);
+            border-radius: 28px;
+            max-width: 800px;
+            width: 100%;
+            padding: 2.5rem;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            box-shadow: 0 0 60px rgba(255, 42, 117, 0.5);
+        }
+
+        .modal-img-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: #10081c;
+        }
+
+        .modal-img-wrapper img {
+            width: 100%; height: 320px;
+            object-fit: cover;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem; right: 1.5rem;
+            font-size: 1.6rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        /* Toast Alert */
+        .toast {
+            position: fixed;
+            bottom: 30px; left: 50%;
+            transform: translateX(-50%) translateY(120px);
+            background: linear-gradient(90deg, var(--primary-glow), var(--accent-purple));
+            color: white;
+            padding: 0.9rem 2.2rem;
+            border-radius: 35px;
+            font-weight: 800;
+            box-shadow: 0 0 30px rgba(255, 42, 117, 0.8);
+            transition: transform 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
+            z-index: 4500;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        @media (max-width: 1150px) {
+            .app-container { grid-template-columns: 220px 1fr; }
+            .sidebar-right { display: none; }
+        }
+        @media (max-width: 800px) {
+            .app-container { grid-template-columns: 1fr; }
+            .sidebar-left { display: none; }
+            .modal-content-3d { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Glowing Orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Announcement Bar -->
+    <div class="top-announcement">
+        <span><i class="fa-solid fa-cube"></i> 3D VIRTUAL K-BEAUTY EXPERIENCE</span>
+        <span>|</span>
+        <span><i class="fa-solid fa-shield-halved"></i> 100% K-BEAUTY AUTHENTIC GUARANTEE</span>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar Left -->
+        <aside class="sidebar-left">
+            <a href="#" class="brand-logo">
+                <div class="brand-icon"><i class="fa-solid fa-sparkles"></i></div>
+                <div class="brand-text">
+                    <h1>HOANHOAN</h1>
+                    <span>LUXURY K-BEAUTY 3D</span>
+                </div>
+            </a>
+
+            <ul class="nav-menu">
+                <li class="nav-item active"><a href="#"><i class="fa-solid fa-cube"></i> 3D 플래그십 홈</a></li>
+                <li class="nav-item"><a href="#"><i class="fa-solid fa-fire"></i> 글로벌 베스트</a></li>
+                <li class="nav-item"><a href="#"><i class="fa-solid fa-wand-magic-sparkles"></i> AI 피부 진단</a></li>
+                <li class="nav-item"><a href="#"><i class="fa-solid fa-bolt"></i> 타임딜 핫딜</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="설화수, 라네즈, 3D 상품 검색..." onkeyup="filterProducts()">
+                </div>
+                <div class="top-actions">
+                    <button class="icon-btn" onclick="toggleCart()" title="장바구니">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="badge-count" id="cartBadge">0</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Hero Banner -->
+            <section class="hero-banner">
+                <div class="hero-body">
+                    <div class="hero-tag"><i class="fa-solid fa-gem"></i> NEXT-GEN K-BEAUTY STORE</div>
+                    <h2 class="hero-title">대한민국 명품 K-뷰티 3D 입체 쇼룸</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">설화수, 라네즈, 조선미녀 등 글로벌 최고급 브랜드 라인업을 3D 그래픽 감성으로 경험해 보세요.</p>
+                    <button class="btn-glow" onclick="scrollToProducts()"><i class="fa-solid fa-cube"></i> 3D 컬렉션 탐색하기</button>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section>
+                <div class="product-grid" id="productGrid">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar Right -->
+        <aside class="sidebar-right">
+            <div style="background: rgba(255,42,117,0.1); border: 1px solid var(--primary-glow); border-radius: 20px; padding: 1.5rem; text-align: center;">
+                <i class="fa-solid fa-cube" style="font-size: 2.5rem; color: var(--secondary-glow); margin-bottom: 0.8rem;"></i>
+                <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">3D 입체 뷰어 지원</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted);">카드를 마우스로 움직여 입체감을 직접 느껴보세요.</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div class="cart-drawer" id="cartDrawer">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid var(--panel-border);">
+            <h3><i class="fa-solid fa-bag-shopping"></i> 장바구니</h3>
+            <i class="fa-solid fa-xmark" style="cursor: pointer; font-size: 1.4rem;" onclick="toggleCart()"></i>
+        </div>
+        <div id="cartItems" style="flex-grow: 1; overflow-y: auto; margin: 1rem 0; display: flex; flex-direction: column; gap: 1rem;"></div>
+        <div style="padding-top: 1rem; border-top: 1px solid var(--panel-border);">
+            <div style="display: flex; justify-content: space-between; font-weight: 900; font-size: 1.2rem; margin-bottom: 1rem;">
+                <span>총 결제금액:</span>
+                <span id="cartTotalPrice" style="color: var(--primary-glow);">₩0</span>
+            </div>
+            <button class="btn-glow" style="width: 100%; justify-content: center;" onclick="checkout()">주문 결제하기</button>
+        </div>
+    </div>
+
+    <!-- 3D Detailed Modal -->
+    <div class="modal-overlay" id="quickModal">
+        <div class="modal-content-3d">
+            <i class="fa-solid fa-xmark modal-close" onclick="closeModal()"></i>
+            <div class="modal-img-wrapper">
+                <img src="" id="modalImg" alt="Product">
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <span id="modalBrand" class="brand-name">BRAND</span>
+                    <h3 id="modalTitle" style="font-size: 1.4rem; margin: 0.4rem 0;">Product Title</h3>
+                    <p id="modalDesc" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem;">Description</p>
+                    <div id="modalPrice" class="price-final" style="font-size: 1.6rem; margin-bottom: 1rem;">₩0</div>
+                </div>
+                <button class="btn-glow" id="modalAddBtn" style="justify-content: center;"><i class="fa-solid fa-cart-plus"></i> 장바구니 담기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">장바구니에 상품이 담겼습니다!</div>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                brand: "Sulwhasoo",
+                name: "설화수 윤조에센스 6세대 90ml",
+                price: 140000,
+                badge: "3D BEST", badgeClass: "badge-best",
+                img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80",
+                desc: "피부 장벽을 활성화하여 건강하게 빛나는 피부를 완성하는 3D 프리미엄 에센스."
+            },
+            {
+                id: 2,
+                brand: "Beauty of Joseon",
+                name: "조선미녀 맑은쌀선크림 SPF50+ 50ml",
+                price: 18000,
+                badge: "GLOBAL 1위", badgeClass: "badge-best",
+                img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80",
+                desc: "쌀 추출물 30% 함유로 촉촉하고 백탁 없는 유기자차 선크림."
+            },
+            {
+                id: 3,
+                brand: "LANEIGE",
+                name: "라네즈 립 슬리핑 마스크 베리 20g",
+                price: 20000,
+                badge: "3D SALE", badgeClass: "badge-sale",
+                img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80",
+                desc: "밤사이 입술 각질을 녹여 매끄러운 입술로 가꾸어주는 립 마스크."
+            },
+            {
+                id: 4,
+                brand: "Dr.Jart+",
+                name: "닥터자르트 시카페어 컬러 코렉팅 크림",
+                price: 45000,
+                badge: "BEST", badgeClass: "badge-best",
+                img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80",
+                desc: "붉은기를 완벽 커버하고 진정 효과를 더해주는 커버 크림."
+            }
+        ];
+
+        let cart = [];
+
+        function renderProducts(items) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = items.map(p => `
+                <div class="product-card-3d" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                    <span class="card-badge ${p.badgeClass}">${p.badge}</span>
+                    <div class="view-3d-tag"><i class="fa-solid fa-cube"></i> 3D View</div>
+                    <div class="product-img-wrapper">
+                        <img src="${p.img}" alt="${p.name}">
+                    </div>
+                    <div class="product-details">
+                        <span class="brand-name">${p.brand}</span>
+                        <h3 class="product-name">${p.name}</h3>
+                        <div class="price-row">
+                            <span class="price-final">₩${p.price.toLocaleString()}</span>
+                            <button class="btn-add-cart" onclick="addToCart(${p.id}); event.stopPropagation();"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 3D Card Tilt Effect Logic
+        function handleTilt(e, card) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -12;
+            const rotateY = ((x - centerX) / centerX) * 12;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+        }
+
+        function resetTilt(card) {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        }
+
+        function addToCart(id) {
+            const item = products.find(p => p.id === id);
+            const existing = cart.find(c => c.id === id);
+            if(existing) existing.qty++;
+            else cart.push({...item, qty: 1});
+            updateCartUI();
+            showToast(`${item.name}이(가) 장바구니에 담겼습니다!`);
+        }
+
+        function updateCartUI() {
+            document.getElementById('cartBadge').innerText = cart.reduce((acc, curr) => acc + curr.qty, 0);
+            document.getElementById('cartItems').innerHTML = cart.map(c => `
+                <div style="display: flex; gap: 0.9rem; background: rgba(255,255,255,0.04); padding: 0.9rem; border-radius: 14px;">
+                    <img src="${c.img}" style="width: 55px; height: 55px; border-radius: 10px; object-fit: cover;">
+                    <div>
+                        <div style="font-size: 0.85rem; font-weight: 700;">${c.name}</div>
+                        <div style="font-size: 0.85rem; color: var(--primary-glow); font-weight: 800;">₩${c.price.toLocaleString()} x ${c.qty}</div>
+                    </div>
+                </div>
+            `).join('');
+            const total = cart.reduce((acc, curr) => acc + (curr.price * curr.qty), 0);
+            document.getElementById('cartTotalPrice').innerText = `₩${total.toLocaleString()}`;
+        }
+
+        function toggleCart() { document.getElementById('cartDrawer').classList.toggle('open'); }
+        function checkout() { alert('주문 결제 페이지로 이동합니다.'); cart = []; updateCartUI(); toggleCart(); }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        function scrollToProducts() { document.getElementById('productGrid').scrollIntoView({ behavior: 'smooth' }); }
+
+        renderProducts(products);
+    </script>
+</body>
+</html>
